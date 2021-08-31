@@ -1,30 +1,19 @@
 <template>
-  <div class="user_warpper">
-    <div class="user_mgr" v-show="!isUpdate">
-      <div class="add_user">
-        <el-button type="primary" icon="el-icon-plus" @click="userAdd">添加</el-button>
+  <div class="sale_sort_warpper">
+    <div class="sale_mar" v-show="!isUpdate">
+      <div class="add_sale">
+        <el-button type="primary" icon="el-icon-plus" @click="saleAdd">添加</el-button>
       </div>
-      <div class="all_user">
-        <el-table :data="userList" border style="width: 100%">
+      <div class="all_sale">
+        <el-table :data="saleList" border style="width: 100%">
           <el-table-column type="index" label="序号" width="150"> </el-table-column>
-          <el-table-column prop="account" label="用户账户" width="120"> </el-table-column>
-          <el-table-column prop="name" label="用户姓名" width="120"> </el-table-column>
-          <el-table-column prop="status" label="锁定状态" width="120">
-            <template slot-scope="scope">
-              <span v-if="scope.row.status == 0">未锁定</span>
-              <span v-else-if="scope.row.status == 1">已锁定</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="createDate" label="添加日期" width="200"> </el-table-column>
-          <el-table-column label="用户权限" width="350">
-            <template slot-scope="scope">
-              <span :key="index" v-for="(item, index) in scope.row.models" v-text="item.modelName + ' ; '"></span>
-            </template>
-          </el-table-column>
+          <el-table-column prop="account" label="分类序列号" width="120"> </el-table-column>
+          <el-table-column prop="name" label="产品类别名称" width="120"> </el-table-column>
+          <el-table-column prop="status" label="描述" width="120"></el-table-column>
           <el-table-column label="操作" width="150">
             <template slot-scope="scope">
-              <el-button @click="upadateUser(scope.row)" type="text" size="small">编辑</el-button>
-              <el-button type="text" size="small" @click="delUser(scope.row)">删除</el-button>
+              <el-button @click="upadateSale(scope.row)" type="text" size="small">修改</el-button>
+              <el-button type="text" size="small" @click="delSale(scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -35,40 +24,21 @@
       </div>
     </div>
 
-    <!-- 修改用户信息 -->
-    <div class="user_update" v-show="isUpdate">
+    <!-- 修改产品分类 -->
+    <div class="sale_update" v-show="isUpdate">
       <div class="tit">
         <span>基本信息</span>
       </div>
       <div class="update_form">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-          <el-form-item label="用户账号" prop="account">
+          <el-form-item label="分类序列号" prop="account">
             <el-input v-model="ruleForm.account" disabled></el-input>
           </el-form-item>
-          <el-form-item label="用户名字" prop="name">
+          <el-form-item label="分类名称" prop="name">
             <el-input v-model="ruleForm.name"></el-input>
           </el-form-item>
-          <el-form-item label="用户密码" prop="passWord">
-            <el-input v-model="ruleForm.passWord" type="password"></el-input>
-          </el-form-item>
-          <el-form-item label="添加日期" prop="createDate">
-            <el-input v-model="ruleForm.createDate" disabled></el-input>
-          </el-form-item>
-          <el-form-item label="锁定状态" prop="status">
-            <el-radio-group v-model="ruleForm.status">
-              <el-radio label="是"></el-radio>
-              <el-radio label="否"></el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="权限" prop="modelcodes">
-            <el-checkbox-group v-model="ruleForm.modelcodes">
-              <el-checkbox label="采购管理" name="modelcodes"></el-checkbox>
-              <el-checkbox label="销售管理" name="modelcodes"></el-checkbox>
-              <el-checkbox label="系统管理" name="modelcodes"></el-checkbox>
-              <el-checkbox label="财务管理" name="modelcodes"></el-checkbox>
-              <el-checkbox label="仓库管理" name="modelcodes"></el-checkbox>
-              <el-checkbox label="业务管理" name="modelcodes"></el-checkbox>
-            </el-checkbox-group>
+          <el-form-item label="描述" prop="name">
+            <el-input v-model="ruleForm.name"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm('ruleForm')">修改</el-button>
@@ -81,13 +51,13 @@
 </template>
 
 <script>
-import { apiGetUserList, apiDeleteUser } from '@/request/api'
+import { apiGetSaleCategory, apiDeleteUser } from '@/request/api'
 import axios from 'axios' // 引入axios
 
 export default {
   data() {
     return {
-      userList: [],
+      saleList: [],
       isUpdate: false,
       totalUser: 1,
       currentPage: 1,
@@ -111,8 +81,8 @@ export default {
   },
   methods: {
     //添加用户
-    userAdd() {
-      this.$router.push('userAdd')
+    saleAdd() {
+      this.$router.push('saleAdd')
     },
     //获取用户列表数据
     getUserList() {
@@ -120,7 +90,7 @@ export default {
         page: this.currentPage
       }).then(res => {
         this.totalUser = res.total
-        this.userList = res.list
+        this.saleList = res.list
       })
     },
     //页数改变
@@ -129,7 +99,7 @@ export default {
       this.getUserList()
     },
     //编辑用户信息
-    upadateUser(row) {
+    upadateSale(row) {
       this.isUpdate = true
       this.ruleForm.account = row.account
       this.ruleForm.name = row.name
@@ -138,7 +108,7 @@ export default {
       this.ruleForm.status = row.status === 0 ? '否' : '是'
     },
     //删除用户
-    delUser(row) {
+    delSale(row) {
       console.log(row.account)
       apiDeleteUser({
         account: row.account
@@ -228,12 +198,12 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.user_mgr {
+.sale_mar {
   padding-left: 20px;
-  .add_user {
+  .add_sale {
     margin-bottom: 40px;
   }
-  .all_user {
+  .all_sale {
     width: 1211px;
   }
   .pagination {
@@ -242,7 +212,7 @@ export default {
 }
 
 //修改用户
-.user_update {
+.sale_update {
   padding: 30px;
   .update_form {
     width: 800px;

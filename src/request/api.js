@@ -22,7 +22,7 @@
  export const apiDeleteUser = p =>post('/main/system/user/delete',p);
 
 //获取产品分类
-export const apiGetSellCategory = p =>get('/main/sell/category/show',p);
+export const apiGetSaleCategory = p =>get('/main/sell/category/show',p);
 
 
 

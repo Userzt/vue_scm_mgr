@@ -26,7 +26,7 @@
               <i class="el-icon-location"></i>
               <span>产品管理</span>
             </template>
-            <el-menu-item index="2-1">产品分类管理</el-menu-item>
+            <el-menu-item index="saleCategory">产品分类管理</el-menu-item>
             <el-menu-item index="2-2">产品列表</el-menu-item>
             <el-menu-item index="2-3">选项3</el-menu-item>
             <el-menu-item index="2-4">选项1</el-menu-item>

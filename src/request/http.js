@@ -1,6 +1,7 @@
 import axios from 'axios' // 引入axios
 import QS from 'qs' // 引入qs模块，用来序列化post类型的数据
 import store from '@/store/index'
+import { Message } from 'element-ui';
 
 axios.defaults.baseURL = 'http://127.0.0.1:9000'
 
@@ -26,6 +27,24 @@ axios.interceptors.request.use(
     return Promise.error(error)
   }
 )
+
+// //响应拦截器
+// axios.interceptors.response.use(response => {
+//     if (response.code === 1) {
+//         // 登录过期 - 1
+//         Message({
+//             message: '登录过期，请重新登录',
+//             type: 'error',
+//         })
+//         router.push('/login')
+//         // 清除浏览器缓存
+//         localStorage.removeItem('token')
+//     } else {
+//         // 响应正常，返回数据即可
+//         return data
+//     }
+// })
+
 
 /**
  * get方法，对应get请求

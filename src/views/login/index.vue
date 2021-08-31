@@ -56,10 +56,15 @@ export default {
                 //保存登录时间
                 sessionStorage.setItem('loginTime', new Date())
                 this.$router.push('home')
-              } else {
+              } else if(res.code === 3) {
                 this.$message({
                   type: 'error',
                   message: '账号或者密码错误'
+                })
+              }else if(res.code === 4){
+                this.$message({
+                  type: 'warning',
+                  message: res.message
                 })
               }
             })

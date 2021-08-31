@@ -6,7 +6,7 @@
       </el-header>
       <el-container>
         <el-aside width="250px">
-          <HomeList />
+          <HomeMenus />
         </el-aside>
         <el-main>
             <Breadcrumb />
@@ -19,7 +19,7 @@
 
 <script>
 import HomeHeader from '@/components/HomeHeader'
-import HomeList from '@/components/HomeList'
+import HomeMenus from '@/components/HomeMenus'
 import Breadcrumb from '@/components/Breadcrumb'
 
 export default {
@@ -28,7 +28,7 @@ export default {
   },
   components: {
     HomeHeader,
-    HomeList,
+    HomeMenus,
     Breadcrumb
   }
 }

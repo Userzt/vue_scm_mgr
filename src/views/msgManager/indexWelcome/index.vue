@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import { getTime } from '@/utils/timeFormat'
+
 export default {
   data() {
     return {
@@ -20,15 +22,7 @@ export default {
     }
   },
   filters: {
-    formatTime: function(date) {
-      const year = date.getFullYear()
-      const month = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()
-      const day = date.getDay() < 10 ? '0' + date.getDay() : date.getDay()
-      const hour = date.getHours() < 10 ? '0' + date.getHours() : date.getHours()
-      const minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
-      const seconds = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
-      return year + '年' + month + '月' + day + '日' + hour + ':' + minutes + ':' + seconds
-    }
+    formatTime: getTime
   }
 }
 </script>

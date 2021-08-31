@@ -33,6 +33,17 @@ const routes = [
         name: 'UserManager',
         component: () => import('@/views/msgManager/userManager'),
         meta: ['用户管理']
+      },
+      {
+        path: '/userAdd',
+        name: 'UserAdd',
+        component: () => import('@/views/msgManager/userAdd'),
+        meta: ['用户添加']
+      }, {
+        path: '/saleCategory',
+        name: 'SaleCategory',
+        component: () => import('@/views/productMgr/productSortMgr'),
+        meta: ['产品分类管理']
       }
     ]
   }
