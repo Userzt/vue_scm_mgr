@@ -63,7 +63,6 @@ export default {
         passWord: [{ required: true, message: '请输入用户密码', trigger: 'blur' }],
         status: [{ required: true, trigger: 'blur' }],
         modelcodes: [{ type: 'array', required: true, message: '请至少选择一种权限', trigger: 'change' }],
-        resource: [{ required: true, message: '请选择活动资源', trigger: 'change' }]
       }
     }
   },
@@ -129,6 +128,7 @@ export default {
 .user_add {
   padding: 30px;
   .add_form {
+    width: 800px;
     margin-top: 40px;
   }
   .tit {
@@ -138,9 +138,6 @@ export default {
       border-bottom: 2px solid #66c9f3;
       padding-bottom: 5px;
     }
-  }
-  .add_form {
-    width: 800px;
   }
 }
 </style>

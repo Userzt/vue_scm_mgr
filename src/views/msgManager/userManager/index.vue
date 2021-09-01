@@ -104,8 +104,7 @@ export default {
         name: [{ required: true, message: '请输入用户名字', trigger: 'blur' }],
         passWord: [{ required: true, message: '请输入用户密码', trigger: 'blur' }],
         status: [{ required: true, trigger: 'blur' }],
-        modelcodes: [{ type: 'array', required: true, message: '请至少选择一种权限', trigger: 'change' }],
-        resource: [{ required: true, message: '请选择活动资源', trigger: 'change' }]
+        modelcodes: [{ type: 'array', required: true, message: '请至少选择一种权限', trigger: 'change' }]
       }
     }
   },
@@ -140,31 +139,34 @@ export default {
     //删除用户
     delUser(row) {
       console.log(row.account)
-      apiDeleteUser({
-        account: row.account
+      this.$confirm('此操作将删除该用户, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
-        .then(res => {
-          if (res.code === 2 && row.status === 0) {
-            this.$confirm('此操作将删除该用户, 是否继续?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
+        .then(() => {
+          apiDeleteUser({
+            account: row.account
+          }).then(res => {
+            if (res.code === 2 && row.status === 0) {
               this.$message({
                 type: 'success',
                 message: res.message
               })
               this.getUserList()
-            })
-          } else if (row.status === 1) {
-            this.$message({
-              type: 'error',
-              message: '用户已被锁定，无法删除！'
-            })
-          }
+            } else {
+              this.$message({
+                type: 'error',
+                message: res.message
+              })
+            }
+          })
         })
-        .catch(err => {
-          console.log(err)
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
         })
     },
     //提交修改

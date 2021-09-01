@@ -1,15 +1,15 @@
 <template>
   <div class="sale_sort_warpper">
-    <div class="sale_mar" v-show="!isUpdate">
+    <div class="sale_mgr" v-show="!isUpdate">
       <div class="add_sale">
         <el-button type="primary" icon="el-icon-plus" @click="saleAdd">添加</el-button>
       </div>
       <div class="all_sale">
         <el-table :data="saleList" border style="width: 100%">
           <el-table-column type="index" label="序号" width="150"> </el-table-column>
-          <el-table-column prop="account" label="分类序列号" width="120"> </el-table-column>
-          <el-table-column prop="name" label="产品类别名称" width="120"> </el-table-column>
-          <el-table-column prop="status" label="描述" width="120"></el-table-column>
+          <el-table-column prop="categoryId" label="分类序列号" width="150"> </el-table-column>
+          <el-table-column prop="name" label="产品类别名称" width="150"> </el-table-column>
+          <el-table-column prop="remark" label="描述" width="250"></el-table-column>
           <el-table-column label="操作" width="150">
             <template slot-scope="scope">
               <el-button @click="upadateSale(scope.row)" type="text" size="small">修改</el-button>
@@ -20,7 +20,7 @@
       </div>
       <!-- 分页栏 -->
       <div class="pagination">
-        <el-pagination @current-change="handleCurrentPageChange" background layout="prev, pager, next" :total="totalUser"> </el-pagination>
+        <el-pagination @current-change="handleCurrentPageChange" background layout="prev, pager, next" :total="totalSale"> </el-pagination>
       </div>
     </div>
 
@@ -31,14 +31,14 @@
       </div>
       <div class="update_form">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-          <el-form-item label="分类序列号" prop="account">
-            <el-input v-model="ruleForm.account" disabled></el-input>
+          <el-form-item label="分类序列号" prop="categoryId">
+            <el-input v-model="ruleForm.categoryId" disabled></el-input>
           </el-form-item>
           <el-form-item label="分类名称" prop="name">
             <el-input v-model="ruleForm.name"></el-input>
           </el-form-item>
-          <el-form-item label="描述" prop="name">
-            <el-input v-model="ruleForm.name"></el-input>
+          <el-form-item label="描述" prop="remark">
+            <el-input v-model="ruleForm.remark"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm('ruleForm')">修改</el-button>
@@ -51,116 +51,119 @@
 </template>
 
 <script>
-import { apiGetSaleCategory, apiDeleteUser } from '@/request/api'
-import axios from 'axios' // 引入axios
+import { apiGetSaleCategory, apiUpdateSaleCategory, apiDelSaleCategory } from '@/request/api'
 
 export default {
   data() {
     return {
       saleList: [],
       isUpdate: false,
-      totalUser: 1,
+      totalSale: 1,
       currentPage: 1,
       ruleForm: {
-        account: '',
+        categoryId: '',
         name: '',
-        passWord: '',
-        createDate: '',
-        modelcodes: [],
-        status: ''
+        remark: ''
       },
       rules: {
-        account: [{ required: true, message: '请输入用户账号', trigger: 'blur' }],
-        name: [{ required: true, message: '请输入用户名字', trigger: 'blur' }],
-        passWord: [{ required: true, message: '请输入用户密码', trigger: 'blur' }],
-        status: [{ required: true, trigger: 'blur' }],
-        modelcodes: [{ type: 'array', required: true, message: '请至少选择一种权限', trigger: 'change' }],
-        resource: [{ required: true, message: '请选择活动资源', trigger: 'change' }]
+        categoryId: [{ required: true, message: '请输入用户账号', trigger: 'blur' }],
+        name: [{ required: true, message: '请输入用户名字', trigger: 'blur' }]
       }
     }
   },
   methods: {
-    //添加用户
+    //添加产品分类
     saleAdd() {
-      this.$router.push('saleAdd')
+      this.$router.push('addCategory')
     },
-    //获取用户列表数据
-    getUserList() {
-      apiGetUserList({
+    //获取产品分类数据
+    getSaleList() {
+      apiGetSaleCategory({
         page: this.currentPage
       }).then(res => {
-        this.totalUser = res.total
+        this.totalSale = res.total
         this.saleList = res.list
       })
     },
     //页数改变
     handleCurrentPageChange(page) {
       this.currentPage = page
-      this.getUserList()
+      this.getSaleList()
     },
     //编辑用户信息
     upadateSale(row) {
       this.isUpdate = true
-      this.ruleForm.account = row.account
+      this.ruleForm.categoryId = row.categoryId
       this.ruleForm.name = row.name
-      this.ruleForm.passWord = row.passWord
-      this.ruleForm.createDate = row.createDate
-      this.ruleForm.status = row.status === 0 ? '否' : '是'
+      this.ruleForm.remark = row.remark
     },
-    //删除用户
+    //删除产品分类
     delSale(row) {
-      console.log(row.account)
-      apiDeleteUser({
-        account: row.account
+      this.$confirm('此操作将删除该产品分类, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
-        .then(res => {
-          if (res.code === 2 && row.status === 0) {
-            this.$confirm('此操作将删除该用户, 是否继续?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
+        .then(() => {
+          apiDelSaleCategory({
+            categoryId: row.categoryId,
+            page: this.currentPage
+          }).then(res => {
+            console.log(res)
+            if (res.code === 2) {
               this.$message({
                 type: 'success',
                 message: res.message
               })
-              this.getUserList()
-            })
-          } else if (row.status === 1) {
-            this.$message({
-              type: 'error',
-              message: '用户已被锁定，无法删除！'
-            })
-          }
+              this.saleList = res.data
+              this.getSaleList()
+            } else if (res.code === 4) {
+              this.$message({
+                type: 'warning',
+                message: '该分类下存在商品，无法删除！'
+              })
+            } else {
+              this.$message({
+                type: 'error',
+                message: res.message
+              })
+            }
+          })
         })
-        .catch(err => {
-          console.log(err)
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
         })
     },
     //提交修改
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          axios({
-            url: `/main/system/user/update?account=${this.ruleForm.account}&name=${this.ruleForm.name}&passWord=${
-              this.ruleForm.passWord
-            }&createDate=${this.ruleForm.createDate}&status=${this.ruleForm.status === '否' ? 0 : 1}&modelcodes=${this.getModelcodes(
-              this.ruleForm.modelcodes
-            )}`,
-            method: 'post',
-            headers: { token: sessionStorage.getItem('token') },
-            baseURL: 'http://127.0.0.1:9000'
-          }).then(res => {
-            if (res.data.code === 2) {
-              this.$message({
-                type: 'success',
-                message: res.data.message
-              })
-              this.isUpdate = false
-              this.getUserList()
-              this.ruleForm.modelcodes = []
-            }
+          apiUpdateSaleCategory({
+            categoryId: this.ruleForm.categoryId,
+            name: this.ruleForm.name,
+            remark: this.ruleForm.remark
           })
+            .then(res => {
+              if (res.code === 2) {
+                this.$message({
+                  type: 'success',
+                  message: res.message
+                })
+                this.isUpdate = false
+                this.getSaleList()
+              } else {
+                this.$message({
+                  type: 'warning',
+                  message: res.message
+                })
+              }
+            })
+            .catch(err => {
+              console.log(err)
+            })
         } else {
           return false
         }
@@ -169,42 +172,21 @@ export default {
     //修改用户信息返回
     reback() {
       this.isUpdate = false
-      this.ruleForm.modelcodes = []
-    },
-    //格式化用户权限
-    getModelcodes(modelsName) {
-      let modelcodesArr = []
-      for (let item of modelsName) {
-        if (item === '采购管理') {
-          modelcodesArr.push(1)
-        } else if (item === '销售管理') {
-          modelcodesArr.push(2)
-        } else if (item === '系统管理') {
-          modelcodesArr.push(3)
-        } else if (item === '财务管理') {
-          modelcodesArr.push(4)
-        } else if (item === '仓库管理') {
-          modelcodesArr.push(5)
-        } else if (item === '业务管理') {
-          modelcodesArr.push(6)
-        }
-      }
-      return modelcodesArr
     }
   },
   mounted() {
-    this.getUserList()
+    this.getSaleList()
   }
 }
 </script>
 <style lang="less" scoped>
-.sale_mar {
+.sale_mgr {
   padding-left: 20px;
   .add_sale {
     margin-bottom: 40px;
   }
   .all_sale {
-    width: 1211px;
+    width: 851px;
   }
   .pagination {
     margin-top: 30px;

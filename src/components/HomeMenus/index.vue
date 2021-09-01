@@ -27,17 +27,15 @@
               <span>产品管理</span>
             </template>
             <el-menu-item index="saleCategory">产品分类管理</el-menu-item>
-            <el-menu-item index="2-2">产品列表</el-menu-item>
-            <el-menu-item index="2-3">选项3</el-menu-item>
-            <el-menu-item index="2-4">选项1</el-menu-item>
+            <el-menu-item index="allproducts">产品列表</el-menu-item>
           </el-submenu>
           <el-submenu index="3">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>采购管理</span>
             </template>
-            <el-menu-item index="3-1">供应商管理</el-menu-item>
-            <el-menu-item index="3-2">新采购管理</el-menu-item>
+            <el-menu-item index="supplier">供应商管理</el-menu-item>
+            <el-menu-item index="3-2">采购单管理</el-menu-item>
             <el-menu-item index="3-3">采购单了结</el-menu-item>
             <el-menu-item index="3-4">采购单查询</el-menu-item>
           </el-submenu>

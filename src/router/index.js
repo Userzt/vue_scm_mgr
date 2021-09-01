@@ -44,6 +44,26 @@ const routes = [
         name: 'SaleCategory',
         component: () => import('@/views/productMgr/productSortMgr'),
         meta: ['产品分类管理']
+      }, {
+        path: '/addCategory',
+        name: 'AddCategory',
+        component: () => import('@/views/productMgr/addCategory'),
+        meta: ['产品分类添加']
+      }, {
+        path: '/allproducts',
+        name: 'Allproducts',
+        component: () => import('@/views/productMgr/productList'),
+        meta: ['产品列表']
+      }, {
+        path: '/addproducts',
+        name: 'Addproducts',
+        component: () => import('@/views/productMgr/addProduct'),
+        meta: ['产品添加']
+      }, {
+        path: '/supplier',
+        name: 'Supplier',
+        component: () => import('@/views/purchaseMgr/supplierMgr'),
+        meta: ['供应商管理']
       }
     ]
   }
