@@ -23,4 +23,7 @@ time, mark, audio, video
   padding: 0;
   margin: 0;
 }
+ .pagination {
+    margin-top: 30px;
+  }
 </style>

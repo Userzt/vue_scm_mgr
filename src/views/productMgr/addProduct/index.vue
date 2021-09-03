@@ -74,6 +74,7 @@ export default {
     }
   },
   methods: {
+    //添加产品
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {

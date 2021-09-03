@@ -9,7 +9,6 @@
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#ffd04b"
-          
           router
         >
           <el-submenu index="1">
@@ -35,9 +34,19 @@
               <span>采购管理</span>
             </template>
             <el-menu-item index="supplier">供应商管理</el-menu-item>
-            <el-menu-item index="3-2">采购单管理</el-menu-item>
-            <el-menu-item index="3-3">采购单了结</el-menu-item>
-            <el-menu-item index="3-4">采购单查询</el-menu-item>
+            <el-menu-item index="buylist">采购单管理</el-menu-item>
+            <el-menu-item index="endlist">采购单了结</el-menu-item>
+            <el-menu-item index="listquery">采购单查询</el-menu-item>
+          </el-submenu>
+          <el-submenu index="4">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>仓库管理</span>
+            </template>
+            <el-menu-item index="warehouseRegister">入库登记</el-menu-item>
+            <el-menu-item index="warehouseOut">出库登记</el-menu-item>
+            <el-menu-item index="warehouseQuery">库存查询</el-menu-item>
+            <el-menu-item index="warehouseCheck">库存盘点</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-col>

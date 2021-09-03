@@ -57,6 +57,9 @@
           <el-form-item label="供应商名称" prop="name">
             <el-input v-model="supplierForm.name"></el-input>
           </el-form-item>
+          <el-form-item label="供应商密码" prop="passWord">
+            <el-input v-model="supplierForm.passWord" type="password"></el-input>
+          </el-form-item>
           <el-form-item label="联系人" prop="contactor">
             <el-input v-model="supplierForm.contactor"></el-input>
           </el-form-item>
@@ -86,7 +89,7 @@
 </template>
 
 <script>
-import { apiGetSupplier } from '@/request/api'
+import { apiGetSupplier, apiUpdateSupplier, apiDelSupplier } from '@/request/api'
 import jutils from 'jutils-src'
 
 export default {
@@ -101,6 +104,7 @@ export default {
       supplierForm: {
         venderCode: '',
         name: '',
+        passWord: '',
         contactor: '',
         address: '',
         postCode: '',
@@ -131,12 +135,11 @@ export default {
   methods: {
     //添加供应商
     supplierAdd() {
-      this.$router.push('addsuppliers')
+      this.$router.push('addsupplier')
     },
     //查询供应商
     onSearch() {
-      console.log(this.currentPage)
-      this.getSupplierList(this.currentPage, this.searchForm.venderCode, this.searchForm.name, this.searchForm.categoryId)
+      this.getSupplierList(this.currentPage, this.searchForm.venderCode, this.searchForm.name)
     },
     //获取供应商数据
     getSupplierList(page = 1, venderCode = '', name = '') {
@@ -145,7 +148,6 @@ export default {
         venderCode,
         name
       }).then(res => {
-        console.log(res)
         this.supplierList = res.list
         this.totalSupplier = res.total
       })
@@ -157,7 +159,6 @@ export default {
     },
     //编辑供应商信息
     upadateSupplier(row) {
-      console.log(row)
       this.isUpdate = true
       this.supplierForm.venderCode = row.venderCode
       this.supplierForm.name = row.name
@@ -177,10 +178,8 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          console.log('sadd')
-          apiDelProduct({
+          apiDelSupplier({
             venderCode: row.venderCode,
-            page: this.currentPage
           }).then(res => {
             console.log(res)
             if (res.code === 2) {
@@ -193,7 +192,7 @@ export default {
             } else if (res.code === 4) {
               this.$message({
                 type: 'warning',
-                message: '该供应商存在相关的销售单或采购单，无法删除！'
+                message: '该供应商存在相关依赖关系，无法删除！'
               })
             } else {
               this.$message({
@@ -214,12 +213,15 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          apiUpdateProduct({
+          apiUpdateSupplier({
             venderCode: this.supplierForm.venderCode,
             name: this.supplierForm.name,
+            passWord: this.supplierForm.passWord,
             contactor: this.supplierForm.contactor,
             address: this.supplierForm.address,
+            postCode: this.supplierForm.postCode,
             createDate: this.supplierForm.createDate,
+            tel: this.supplierForm.tel,
             fax: this.supplierForm.fax
           })
             .then(res => {
@@ -264,9 +266,6 @@ export default {
   }
   .all_supplier {
     width: 1401px;
-  }
-  .pagination {
-    margin-top: 30px;
   }
 }
 

@@ -54,3 +54,39 @@ export const apiDelProduct = p => post('/main/sell/product/delete', p)
 
 //获取供应商
 export const apiGetSupplier = p => get('/main/purchase/vender/show', p)
+
+//修改供应商
+export const apiUpdateSupplier = p => post('/main/purchase/vender/update', p)
+
+//添加供应商
+export const apiAddSupplier = p => post('/main/purchase/vender/add', p)
+
+//删除供应商
+export const apiDelSupplier = p => post('/main/purchase/vender/delete', p)
+
+//获取根据条件查询的采购单
+export const apiBuylistQuery = p => get('/main/purchase/pomain/query', p)
+
+//获取所有供应商列表
+export const apiGetVenderAll = p => get('/main/purchase/vender/all', p)
+
+//获取指定采购单的明细
+export const apiGetPomainQueryItem = p => get('/main/purchase/pomain/queryItem', p)
+
+//修改新增状态的采购单
+export const apiPomainUpdate = p => post('/main/purchase/pomain/update', p)
+
+//删除新增状态的采购单
+export const apiDelPomain = p => post('/main/purchase/pomain/delete', p)
+
+//采购单了结
+export const apiPomainEnd = p => post('/main/purchase/pomain/end', p)
+
+//获取指定类型的采购单
+export const apiPomainShow = p => get('/main/purchase/pomain/show', p)
+
+//入库
+export const apiInstock = p => post('/main/stock/instock', p)
+
+//出库
+export const apiOutstock = p => post('/main/stock/outstock', p)

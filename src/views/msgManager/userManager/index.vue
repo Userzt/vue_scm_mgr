@@ -238,9 +238,6 @@ export default {
   .all_user {
     width: 1211px;
   }
-  .pagination {
-    margin-top: 30px;
-  }
 }
 
 //修改用户

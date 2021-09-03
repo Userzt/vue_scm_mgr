@@ -62,8 +62,53 @@ const routes = [
       }, {
         path: '/supplier',
         name: 'Supplier',
-        component: () => import('@/views/purchaseMgr/supplierMgr'),
+        component: () => import('@/views/purchaseMgr/SupplierManager/supplierMgr'),
         meta: ['供应商管理']
+      }, {
+        path: '/addsupplier',
+        name: 'AddSupplier',
+        component: () => import('@/views/purchaseMgr/SupplierManager/addSupplier'),
+        meta: ['供应商添加']
+      }, {
+        path: '/buylist',
+        name: 'Buylist',
+        component: () => import('@/views/purchaseMgr/BuylistManager/buylistMgr'),
+        meta: ['采购单管理']
+      }, {
+        path: '/addbuylist',
+        name: 'AddBuylist',
+        component: () => import('@/views/purchaseMgr/BuylistManager/addBuylist'),
+        meta: ['采购单添加']
+      }, {
+        path: '/endlist',
+        name: 'Endlist',
+        component: () => import('@/views/purchaseMgr/endlist'),
+        meta: ['采购单了结']
+      }, {
+        path: '/listquery',
+        name: 'Listquery',
+        component: () => import('@/views/purchaseMgr/buylistQuery'),
+        meta: ['采购单查询']
+      }, {
+        path: '/warehouseRegister',
+        name: 'WarehouseRegister',
+        component: () => import('@/views/warehouseMgr/register'),
+        meta: ['入库登记']
+      }, {
+        path: '/warehouseOut',
+        name: 'WarehouseOut',
+        component: () => import('@/views/warehouseMgr/out'),
+        meta: ['出库登记']
+      }, {
+        path: '/warehouseQuery',
+        name: 'WarehouseQuery',
+        component: () => import('@/views/warehouseMgr/query'),
+        meta: ['库存查询']
+      }, {
+        path: '/warehouseCheck',
+        name: 'WarehouseCheck',
+        component: () => import('@/views/warehouseMgr/check'),
+        meta: ['库存盘点']
       }
     ]
   }

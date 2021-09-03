@@ -15,6 +15,7 @@
           </el-form-item>
           <el-form-item label="产品类别">
             <el-select v-model="searchForm.categoryId" placeholder="请选择分类">
+              <el-option label="" value=""></el-option>
               <el-option v-for="item in allSaleCategory" :key="item.categoryId" :label="item.name" :value="item.categoryId"> </el-option>
             </el-select>
           </el-form-item>
@@ -274,9 +275,6 @@ export default {
   }
   .all_product {
     width: 1351px;
-  }
-  .pagination {
-    margin-top: 30px;
   }
 }
 
