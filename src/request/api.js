@@ -90,3 +90,36 @@ export const apiInstock = p => post('/main/stock/instock', p)
 
 //出库
 export const apiOutstock = p => post('/main/stock/outstock', p)
+
+//获取指定类型的销售单
+export const apiGetSomainShow = p => get('/main/sell/somain/show', p)
+
+//获取指定销售单的明细
+export const apiGetSomainQueryItem = p => get('/main/sell/somain/queryItem', p)
+
+//库存查询
+export const apiGetStock = p => get('/main/stock/query', p)
+
+//库存盘点
+export const apiCheckStock = p => get('/main/stock/checkstock', p)
+
+//获取客户信息
+export const apiGetCustomer = p => get('/main/sell/customer/show', p)
+
+//添加客户
+export const apiCustomerAdd = p => post('/main/sell/customer/add', p)
+
+//修改客户
+export const apiCustomerUpdate = p => post('/main/sell/customer/update', p)
+
+//删除客户
+export const apiCustomerDel = p => post('/main/sell/customer/delete', p)
+
+//获取根据条件查询的销售单
+export const apiGetSomainQuery = p => get('/main/sell/somain/query', p)
+
+//修改新增状态的销售单
+export const apiSomainUpdate = p => post('/main/sell/somain/update', p)
+
+//销售单了结
+export const apiSomainEnd = p => post('/main/sell/somain/end', p)

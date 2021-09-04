@@ -3,16 +3,16 @@
     <PaytypeQueryBar @cashOnDelivery="cashOnDelivery" @paymentToDelivery="paymentToDelivery" @advancePaymentToDelivery="advancePaymentToDelivery" />
 
     <!-- 采购单展示区 -->
-    <div class="all_buylist" style="width:1501px">
-      <el-table :data="buyList" border style="width: 100%">
+    <div class="all_salelist" style="width:1501px">
+      <el-table :data="saleList" border style="width: 100%">
         <el-table-column type="index" label="序号" width="100"> </el-table-column>
-        <el-table-column prop="poId" label="采购单编号" width="150"> </el-table-column>
+        <el-table-column prop="soId" label="采购单编号" width="150"> </el-table-column>
         <el-table-column prop="createTime" label="创建时间" width="200"></el-table-column>
-        <el-table-column prop="venderName" label="供应商名称" width="100"> </el-table-column>
+        <el-table-column prop="customerCode" label="客户编号" width="100"> </el-table-column>
         <el-table-column prop="account" label="创建用户" width="100"></el-table-column>
         <el-table-column prop="tipFee" label="附加费用" width="100"></el-table-column>
         <el-table-column prop="productTotal" label="产品总价" width="100"></el-table-column>
-        <el-table-column prop="poTotal" label="采购单总价" width="100"></el-table-column>
+        <el-table-column prop="soTotal" label="采购单总价" width="100"></el-table-column>
         <el-table-column prop="payType" label="付款方式" width="150">
           <template slot-scope="scope">
             <span v-if="scope.row.payType == 1">货到付款</span>
@@ -41,8 +41,8 @@
 
     <!-- 采购单明细弹框 -->
     <el-dialog title="详情" :visible.sync="dialogDetailsVisible">
-      <el-table :data="poitems">
-        <el-table-column property="poId" label="供货商编号" width="150"></el-table-column>
+      <el-table :data="soitems">
+        <el-table-column property="soId" label="供货商编号" width="150"></el-table-column>
         <el-table-column property="productCode" label="产品编号" width="100"></el-table-column>
         <el-table-column property="productName" label="产品名字" width="170"></el-table-column>
         <el-table-column property="unitPrice" label="产品单价" width="100"></el-table-column>
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { apiBuylistQuery, apiGetPomainQueryItem, apiPomainEnd } from '@/request/api'
+import { apiSomainEnd, apiGetSomainQuery, apiGetSomainQueryItem } from '@/request/api'
 import PaytypeQueryBar from '@/components/PaytypeQueryBar'
 
 export default {
@@ -68,30 +68,30 @@ export default {
   },
   data() {
     return {
-      buyList: [],
+      saleList: [],
       totalBuylist: 1,
       currentPage: 1,
-      poitems: [],
+      soitems: [],
       dialogDetailsVisible: false
     }
   },
   methods: {
     //货到付款
     cashOnDelivery() {
-      this.getSupplierList(1, 3, this.currentPage)
+      this.getSomainList(1, 3, this.currentPage)
     },
     //款到发货
     paymentToDelivery() {
-      this.getSupplierList(2, 2, this.currentPage)
+      this.getSomainList(2, 2, this.currentPage)
     },
     //预付款到发货
     advancePaymentToDelivery() {
-      this.getSupplierList(3, 3, this.currentPage)
+      this.getSomainList(3, 3, this.currentPage)
     },
     //打开详情
     showDetails(row) {
       this.dialogDetailsVisible = true
-      this.getPomainQueryItem(row.poId)
+      this.getSomainQueryItem(row.soId)
     },
     //了结
     settle(row) {
@@ -101,8 +101,8 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          apiPomainEnd({
-            poId: row.poId,
+          apiSomainEnd({
+            soId: row.soId,
             payType: row.payType,
             page: this.currentPage
           }).then(res => {
@@ -111,7 +111,7 @@ export default {
                 type: 'success',
                 message: res.message
               })
-              this.buyList = res.data.list
+              this.saleList = res.data.list
             } else {
               this.$message({
                 type: 'error',
@@ -128,33 +128,33 @@ export default {
         })
     },
     //获取指定付款方式的新增采购单数据
-    getSupplierList(payType = '', status = '', page = 1) {
-      apiBuylistQuery({
+    getSomainList(payType = '', status = '', page = 1) {
+      apiGetSomainQuery({
         payType,
         status,
         page
       }).then(res => {
         console.log(res)
-        this.buyList = res.list
+        this.saleList = res.list
         this.totalBuylist = res.total
       })
     },
     //获取指定采购单的明细
-    getPomainQueryItem(poId) {
-      apiGetPomainQueryItem({
-        poId
+    getSomainQueryItem(soId) {
+      apiGetSomainQueryItem({
+        soId
       }).then(res => {
-        this.poitems = res
+        this.soitems = res
       })
     },
     //页数改变
     handleCurrentPageChange(page) {
       this.currentPage = page
-      this.getSupplierList(this.currentPage)
+      this.getSomainList(this.currentPage)
     }
   },
   mounted() {
-    this.getSupplierList(1, 3, this.currentPage)
+    this.getSomainList(1, 3, this.currentPage)
   }
 }
 </script>

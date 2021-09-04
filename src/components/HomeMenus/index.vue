@@ -48,6 +48,16 @@
             <el-menu-item index="warehouseQuery">库存查询</el-menu-item>
             <el-menu-item index="warehouseCheck">库存盘点</el-menu-item>
           </el-submenu>
+          <el-submenu index="5">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>销售管理</span>
+            </template>
+            <el-menu-item index="customer">客户管理</el-menu-item>
+            <el-menu-item index="salelist">销售单管理</el-menu-item>
+            <el-menu-item index="oversale">销售单了结</el-menu-item>
+            <el-menu-item index="salequery">销售单查询</el-menu-item>
+          </el-submenu>
         </el-menu>
       </el-col>
     </el-row>

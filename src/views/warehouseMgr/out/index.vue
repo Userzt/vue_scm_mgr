@@ -5,13 +5,13 @@
     <!-- 可以出库的采购单 -->
     <el-table :data="outList" border style="width: 1391px">
       <el-table-column type="index" label="序号" width="80"> </el-table-column>
-      <el-table-column prop="poId" label="采购单编号" width="120"> </el-table-column>
+      <el-table-column prop="soId" label="销售单编号" width="120"> </el-table-column>
       <el-table-column prop="createTime" label="创建时间" width="160"></el-table-column>
-      <el-table-column prop="venderName" label="供应商名称" width="150"> </el-table-column>
+      <el-table-column prop="name" label="客户名字" width="150"> </el-table-column>
       <el-table-column prop="account" label="创建用户" width="100"></el-table-column>
       <el-table-column prop="tipFee" label="附加费用" width="100"></el-table-column>
       <el-table-column prop="productTotal" label="采购产品总价" width="120"></el-table-column>
-      <el-table-column prop="poTotal" label="采购单总价" width="100"></el-table-column>
+      <el-table-column prop="soTotal" label="销售单总价" width="100"></el-table-column>
       <el-table-column prop="payType" label="付款方式" width="120">
         <template slot-scope="scope">
           <span v-if="scope.row.payType == 1">货到付款</span>
@@ -39,7 +39,6 @@
     <!-- 采购单明细弹框 -->
     <el-dialog title="详情" :visible.sync="dialogDetailsVisible">
       <el-table :data="poitems">
-        <el-table-column property="poId" label="供货商编号" width="150"></el-table-column>
         <el-table-column property="productCode" label="产品编号" width="100"></el-table-column>
         <el-table-column property="productName" label="产品名字" width="150"></el-table-column>
         <el-table-column property="unitPrice" label="产品单价" width="100"></el-table-column>
@@ -56,7 +55,7 @@
 </template>
 
 <script>
-import { apiPomainShow, apiGetPomainQueryItem, apiInstock } from '@/request/api'
+import {  apiGetSomainShow,apiGetSomainQueryItem ,apiOutstock} from '@/request/api'
 import PaytypeQueryBar from '@/components/PaytypeQueryBar'
 
 export default {
@@ -72,31 +71,31 @@ export default {
   methods: {
     //货到付款
     cashOnDelivery() {
-      this.getNewAddPomainList(2, 1, this.currentPage)
+      this.getOutSomainList(2, 1, this.currentPage)
     },
     //款到发货
     paymentToDelivery() {
-      this.getNewAddPomainList(2, 2, this.currentPage)
+      this.getOutSomainList(2, 2, this.currentPage)
     },
     //预付款到发货
     advancePaymentToDelivery() {
-      this.getNewAddPomainList(2, 3, this.currentPage)
+      this.getOutSomainList(2, 3, this.currentPage)
     },
     //查看详情
     showDetails(row) {
       this.dialogDetailsVisible = true
-      this.getPomainQueryItem(row.poId)
+      this.getSomainQueryItem(row.soId)
     },
-    //入库
+    //出库
     inStock(row) {
-      this.$confirm('此操作将该采购单入库, 是否继续?', '提示', {
+      this.$confirm('此操作将该采购单出库, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       })
         .then(() => {
-          apiInstock({
-            poId: row.poId,
+          apiOutstock({
+            soId: row.soId,
             payType: row.payType,
             page: this.currentPage
           }).then(res => {
@@ -106,7 +105,7 @@ export default {
                 message: res.message
               })
               this.outList = res.data
-              this.getNewAddPomainList(1, row.payType, this.currentPage)
+              this.getOutSomainList(1, row.payType, this.currentPage)
             } else {
               this.$message({
                 type: 'error',
@@ -118,24 +117,25 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消了结'
+            message: '已取消出库'
           })
         })
     },
-    //获取新增状态的采购单
-    getNewAddPomainList(type, payType, page) {
-      apiPomainShow({
+    //获取可以进行出库登记的销售单
+    getOutSomainList(type, payType, page) {
+      apiGetSomainShow({
         type,
         payType,
         page
       }).then(res => {
         this.outList = res.list
+        this.totalNewAddList = res.total
       })
     },
-    //获取指定采购单的明细
-    getPomainQueryItem(poId) {
-      apiGetPomainQueryItem({
-        poId
+    //获取指定销售单的明细
+    getSomainQueryItem(soId) {
+      apiGetSomainQueryItem({
+        soId
       }).then(res => {
         this.poitems = res
       })
@@ -143,14 +143,14 @@ export default {
     //页数改变
     handleCurrentPageChange(page) {
       this.currentPage = page
-      this.getNewAddPomainList('', '', this.currentPage)
+      this.getOutSomainList('', '', this.currentPage)
     }
   },
   components: {
     PaytypeQueryBar
   },
   mounted() {
-    this.getNewAddPomainList(2, 1, 1)
+    this.getOutSomainList(2, 1, 1)
   }
 }
 </script>

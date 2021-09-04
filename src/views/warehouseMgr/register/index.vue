@@ -118,7 +118,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消了结'
+            message: '已取消入库'
           })
         })
     },
@@ -130,6 +130,7 @@ export default {
         page
       }).then(res => {
         this.newAddlist = res.list
+        this.totalNewAddList = res.total
       })
     },
     //获取指定采购单的明细

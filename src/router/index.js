@@ -39,76 +39,126 @@ const routes = [
         name: 'UserAdd',
         component: () => import('@/views/msgManager/userAdd'),
         meta: ['用户添加']
-      }, {
+      },
+      {
         path: '/saleCategory',
         name: 'SaleCategory',
         component: () => import('@/views/productMgr/productSortMgr'),
         meta: ['产品分类管理']
-      }, {
+      },
+      {
         path: '/addCategory',
         name: 'AddCategory',
         component: () => import('@/views/productMgr/addCategory'),
         meta: ['产品分类添加']
-      }, {
+      },
+      {
         path: '/allproducts',
         name: 'Allproducts',
         component: () => import('@/views/productMgr/productList'),
         meta: ['产品列表']
-      }, {
+      },
+      {
         path: '/addproducts',
         name: 'Addproducts',
         component: () => import('@/views/productMgr/addProduct'),
         meta: ['产品添加']
-      }, {
+      },
+      {
         path: '/supplier',
         name: 'Supplier',
         component: () => import('@/views/purchaseMgr/SupplierManager/supplierMgr'),
         meta: ['供应商管理']
-      }, {
+      },
+      {
         path: '/addsupplier',
         name: 'AddSupplier',
         component: () => import('@/views/purchaseMgr/SupplierManager/addSupplier'),
         meta: ['供应商添加']
-      }, {
+      },
+      {
         path: '/buylist',
         name: 'Buylist',
         component: () => import('@/views/purchaseMgr/BuylistManager/buylistMgr'),
         meta: ['采购单管理']
-      }, {
+      },
+      {
         path: '/addbuylist',
         name: 'AddBuylist',
         component: () => import('@/views/purchaseMgr/BuylistManager/addBuylist'),
         meta: ['采购单添加']
-      }, {
+      },
+      {
         path: '/endlist',
         name: 'Endlist',
         component: () => import('@/views/purchaseMgr/endlist'),
         meta: ['采购单了结']
-      }, {
+      },
+      {
         path: '/listquery',
         name: 'Listquery',
         component: () => import('@/views/purchaseMgr/buylistQuery'),
         meta: ['采购单查询']
-      }, {
+      },
+      {
         path: '/warehouseRegister',
         name: 'WarehouseRegister',
         component: () => import('@/views/warehouseMgr/register'),
         meta: ['入库登记']
-      }, {
+      },
+      {
         path: '/warehouseOut',
         name: 'WarehouseOut',
         component: () => import('@/views/warehouseMgr/out'),
         meta: ['出库登记']
-      }, {
+      },
+      {
         path: '/warehouseQuery',
         name: 'WarehouseQuery',
         component: () => import('@/views/warehouseMgr/query'),
         meta: ['库存查询']
-      }, {
+      },
+      {
         path: '/warehouseCheck',
         name: 'WarehouseCheck',
         component: () => import('@/views/warehouseMgr/check'),
         meta: ['库存盘点']
+      },
+      {
+        path: '/customer',
+        name: 'Customer',
+        component: () => import('@/views/saleMgr/customer'),
+        meta: ['客户管理']
+      },
+      {
+        path: '/customerAdd',
+        name: 'CustomerAdd',
+        component: () => import('@/views/saleMgr/customer/customerAdd'),
+        meta: ['客户添加']
+      },
+      {
+        path: '/salelist',
+        name: 'Salelist',
+        component: () => import('@/views/saleMgr/saleList'),
+        meta: ['销售单管理']
+      },
+      {
+        path: '/salelistAdd',
+        name: 'SalelistAdd',
+        component: () => import('@/views/saleMgr/saleList/addSalelist'),
+        meta: ['销售单添加']
+      },
+      {
+        path: '/oversale',
+        name: 'OverSale',
+        component: () => import('@/views/saleMgr/overSale'),
+        meta: ['销售单了结']
+      },
+      {
+        path: '/salequery',
+        name: 'Salequery',
+        component: () => import('@/views/saleMgr/saleQuery'),
+        meta: ['销售单查询']
       }
     ]
   }

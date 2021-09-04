@@ -16,7 +16,9 @@
         </el-form-item>
         <el-form-item label="产品分类" prop="categoryId">
           <el-select v-model="productForm.categoryId">
-            <el-option v-for="item in allSaleCategory" :key="item.categoryId" :label="item.name" :value="item.categoryId"> </el-option>
+            <el-option v-for="item in allSaleCategory" :key="item.categoryId" :label="item.name" :value="item.categoryId">
+              {{ item.categoryId }} - {{ item.name }}
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="销售价" prop="price">
@@ -95,13 +97,12 @@ export default {
                   message: res.message
                 })
                 this.$router.push('allproducts')
-              }else if(res.code === 4){
-                 this.$message({
+              } else if (res.code === 4) {
+                this.$message({
                   type: 'warning',
                   message: '该产品编号已存在，创建失败'
                 })
-              }
-               else {
+              } else {
                 this.$message({
                   type: 'warning',
                   message: res.message

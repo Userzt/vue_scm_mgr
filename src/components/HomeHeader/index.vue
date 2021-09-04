@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { getTime } from '@/utils/timeFormat'
+import jutils from 'jutils-src'
 
 export default {
   data() {
@@ -22,12 +22,9 @@ export default {
       nowTime: ''
     }
   },
-  filters: {
-    parsetime: getTime
-  },
   mounted() {
     this.timer = setInterval(() => {
-      this.nowTime = getTime(new Date())
+      this.nowTime = jutils.formatDate(new Date(), 'YYYY年MM月DD日 HH:ii:ss')
     }, 1000)
   },
   beforeDestroy() {

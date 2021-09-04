@@ -6,24 +6,21 @@
     </div>
     <div class="login_time">
       <img src="@/assets/time.png" alt="clock" />
-      <p>您登录的时间为：{{ loginTime | formatTime }}</p>
+      <p>您登录的时间为：{{ loginTime  }}</p>
     </div>
   </div>
 </template>
 
 <script>
-import { getTime } from '@/utils/timeFormat'
+import jutils from 'jutils-src'
 
 export default {
   data() {
     return {
       account: sessionStorage.getItem('account'),
-      loginTime: new Date(sessionStorage.getItem('loginTime'))
+      loginTime: jutils.formatDate(new Date(sessionStorage.getItem('loginTime')),'YYYY-MM-DD HH:ii:ss')  
     }
   },
-  filters: {
-    formatTime: getTime
-  }
 }
 </script>
 
