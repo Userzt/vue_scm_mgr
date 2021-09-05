@@ -7,7 +7,7 @@
           <el-input v-model="user.username" placeholder="用户名"></el-input>
         </el-form-item>
         <el-form-item label="" prop="password">
-          <el-input v-model="user.password" type='password' placeholder="密码"></el-input>
+          <el-input v-model="user.password" type="password" placeholder="密码"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button class="login_btn" type="primary" @click="loginIn">登录</el-button>
@@ -56,12 +56,12 @@ export default {
                 //保存登录时间
                 sessionStorage.setItem('loginTime', new Date())
                 this.$router.push('home')
-              } else if(res.code === 3) {
+              } else if (res.code === 3) {
                 this.$message({
                   type: 'error',
                   message: '账号或者密码错误'
                 })
-              }else if(res.code === 4){
+              } else if (res.code === 4) {
                 this.$message({
                   type: 'warning',
                   message: res.message
@@ -84,7 +84,7 @@ export default {
   height: 80vh;
   padding-top: 20vh;
   text-align: center;
-  background-color: #324057;
+  background-image: url('../../assets/bg_pic.jpg');
   h1 {
     font-weight: 500;
     color: #fff;
@@ -97,7 +97,7 @@ export default {
       margin-top: 50px;
       padding: 20px;
       border-radius: 10px;
-      background-color: #fff;
+      background-color: rgba(255, 255, 255, 0.6);
       .login_btn {
         width: 100%;
         margin-top: 20px;

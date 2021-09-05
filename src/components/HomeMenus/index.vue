@@ -58,6 +58,27 @@
             <el-menu-item index="oversale">销售单了结</el-menu-item>
             <el-menu-item index="salequery">销售单查询</el-menu-item>
           </el-submenu>
+          <el-submenu index="6">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>财务收支</span>
+            </template>
+            <el-menu-item index="incomeCheck">收款登记</el-menu-item>
+            <el-menu-item index="payCheck">付款登记</el-menu-item>
+            <el-menu-item index="payquery">收支查询</el-menu-item>
+          </el-submenu>
+          <el-submenu index="7">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>月度报表</span>
+            </template>
+            <el-menu-item index="poreport">月度采购报表</el-menu-item>
+            <el-menu-item index="soreport">月度销售报表</el-menu-item>
+            <el-menu-item index="outreport">月度出库报表</el-menu-item>
+            <el-menu-item index="inreport">月度入库报表</el-menu-item>
+            <el-menu-item index="storereport">月度库存报表</el-menu-item>
+            <el-menu-item index="payreport">月度收支报表</el-menu-item>
+          </el-submenu>
         </el-menu>
       </el-col>
     </el-row>
@@ -103,6 +124,6 @@ export default {
 </script>
 <style lang="less" scoped>
 .el-menu-vertical-demo {
-  height: 857px !important;
+  height: 875px !important;
 }
 </style>

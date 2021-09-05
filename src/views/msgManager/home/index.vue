@@ -36,7 +36,7 @@ export default {
 <style lang="less" scoped>
 .el-header {
   height: 80px !important;
-  background-color: #2d2d2d;
+  background: url('../../../assets/topbg.gif') repeat-x;
 }
 .el-main{
     padding: 0 !important;

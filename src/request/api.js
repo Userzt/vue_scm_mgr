@@ -123,3 +123,36 @@ export const apiSomainUpdate = p => post('/main/sell/somain/update', p)
 
 //销售单了结
 export const apiSomainEnd = p => post('/main/sell/somain/end', p)
+
+//收款
+export const apiReceipt = p => post('/main/finance/receipt', p)
+
+//付款
+export const apiPay = p => post('/main/finance/pay', p)
+
+//收支查询
+export const apiGetFinanceQuery = p => get('/main/finance/query', p)
+
+//获取月度采购情况
+export const apiGetReportPomain = p => get('/main/report/pomain/main', p)
+
+//获取月度销售情况
+export const apiGetReportSomain = p => get('/main/report/somain/main', p)
+
+// 获取月度收支情况
+export const apiGetReportPayment = p => get('/main/report/payment/main', p)
+
+//获取月度入库情况
+export const apiGetReportInstock = p => get('/main/report/instock/main', p)
+
+//获取月度出库情况
+export const apiGetReportOutstock = p => get('/main/report/outstock/main', p)
+
+// 获取月度库存情况
+export const apiGetReportStock = p => get('/main/report/stock/main', p)
+
+//获取收款明细
+export const apiGetReceiptDetail = p => get('/main/report/payment/detail/receipt', p)
+
+//获取付款明细
+export const apiGetPayDetail = p => get('/main/report/payment/detail/pay', p)

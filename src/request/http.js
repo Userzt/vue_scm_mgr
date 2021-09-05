@@ -11,6 +11,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 
 axios.defaults.withCredentials = true
 
+
 //请求拦截器
 axios.interceptors.request.use(
   config => {
@@ -28,7 +29,7 @@ axios.interceptors.request.use(
   }
 )
 
-// //响应拦截器
+//响应拦截器
 // axios.interceptors.response.use(response => {
 //     if (response.code === 1) {
 //         // 登录过期 - 1

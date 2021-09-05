@@ -173,7 +173,7 @@ export default {
       isCheck: false,
       currentPage: 1,
       productCode: '',
-      //所有供应商
+      //所有客户
       customerList: [],
       //所有产品名称以及编号
       productAll: [],

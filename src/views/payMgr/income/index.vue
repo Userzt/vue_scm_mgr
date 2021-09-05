@@ -1,7 +1,6 @@
 <template>
-  <div class="endlist_wrapper">
+  <div class="income_wrapper">
     <PaytypeQueryBar @cashOnDelivery="cashOnDelivery" @paymentToDelivery="paymentToDelivery" @advancePaymentToDelivery="advancePaymentToDelivery" />
-
     <!-- 销售单展示区 -->
     <div class="all_salelist" style="width:1501px">
       <el-table :data="saleList" border style="width: 100%">
@@ -33,7 +32,7 @@
         <el-table-column label="操作" width="150">
           <template slot-scope="scope">
             <el-button @click="showDetails(scope.row)" type="text" size="small" class="details_btn">详情</el-button>
-            <el-button type="text" size="small" @click="settle(scope.row)">了结</el-button>
+            <el-button type="text" size="small" @click="receipt(scope.row)">收款</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -58,8 +57,8 @@
 </template>
 
 <script>
-import { apiSomainEnd, apiGetSomainQuery, apiGetSomainQueryItem } from '@/request/api'
 import PaytypeQueryBar from '@/components/PaytypeQueryBar'
+import { apiGetSomainShow, apiGetSomainQueryItem, apiReceipt } from '@/request/api'
 
 export default {
   components: {
@@ -81,7 +80,7 @@ export default {
     },
     //款到发货
     paymentToDelivery() {
-      this.getSomainList(2, 2, this.currentPage)
+      this.getSomainList(2, 3, this.currentPage)
     },
     //预付款到发货
     advancePaymentToDelivery() {
@@ -92,45 +91,11 @@ export default {
       this.dialogDetailsVisible = true
       this.getSomainQueryItem(row.soId)
     },
-    //了结
-    settle(row) {
-      this.$confirm('此操作将了结该销售单, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
-        .then(() => {
-          apiSomainEnd({
-            soId: row.soId,
-            payType: row.payType,
-            page: this.currentPage
-          }).then(res => {
-            if (res.code === 2) {
-              this.$message({
-                type: 'success',
-                message: res.message
-              })
-              this.saleList = res.data.list
-            } else {
-              this.$message({
-                type: 'error',
-                message: res.message
-              })
-            }
-          })
-        })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消了结'
-          })
-        })
-    },
-    //获取指定付款方式的新增销售单数据
-    getSomainList(payType = '', status = '', page = 1) {
-      apiGetSomainQuery({
+    //获取指定付款方式的销售单数据
+    getSomainList(payType = '', type = '', page = 1) {
+      apiGetSomainShow({
         payType,
-        status,
+        type,
         page
       }).then(res => {
         console.log(res)
@@ -150,15 +115,49 @@ export default {
     handleCurrentPageChange(page) {
       this.currentPage = page
       this.getSomainList(this.currentPage)
+    },
+    //收款
+    receipt(row) {
+      this.$confirm('此操作将收款该销售单, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          apiReceipt({
+            soId: row.soId,
+            type: row.payType === 2 ? 1 : 2,
+            page: this.currentPage
+          }).then(res => {
+            if (res.code === 2) {
+              this.$message({
+                type: 'success',
+                message: res.message
+              })
+              this.getSomainList(row.payType, 3, this.currentPage)
+            } else {
+              this.$message({
+                type: 'error',
+                message: res.message
+              })
+            }
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消收款'
+          })
+        })
     }
   },
   mounted() {
-    this.getSomainList(1, 3, this.currentPage)
+    this.getSomainList(1, 3, 1)
   }
 }
 </script>
 <style lang="less" scoped>
-.endlist_wrapper {
+.income_wrapper {
   padding-left: 20px;
 }
 </style>

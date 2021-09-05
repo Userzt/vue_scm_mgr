@@ -177,6 +177,7 @@ export default {
             baseURL: 'http://127.0.0.1:9000'
           })
             .then(res => {
+              console.log(res);
               if (res.data.code === 2) {
                 this.$message({
                   type: 'success',
@@ -191,7 +192,7 @@ export default {
               } else if (res.data.code === 4) {
                 this.$message({
                   type: 'warning',
-                  message: '不可重复添加同一产品的销售单明细'
+                  message: res.data.message
                 })
               } else {
                 this.$message({
