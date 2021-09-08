@@ -72,7 +72,6 @@ export default {
   methods: {
     //盘点
     check(row) {
-      console.log(row)
       this.productCode = row.productCode
       this.originNum = row.num
       this.dialogFormVisible = true

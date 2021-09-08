@@ -16,7 +16,9 @@
           <el-form-item label="产品类别">
             <el-select v-model="searchForm.categoryId" placeholder="请选择分类">
               <el-option label="" value=""></el-option>
-              <el-option v-for="item in allSaleCategory" :key="item.categoryId" :label="item.name" :value="item.categoryId"> {{ item.categoryId }} - {{ item.name }}</el-option>
+              <el-option v-for="item in allSaleCategory" :key="item.categoryId" :label="item.name" :value="item.categoryId">
+                {{ item.categoryId }} - {{ item.name }}</el-option
+              >
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -138,7 +140,6 @@ export default {
     },
     //查询产品
     onSearch() {
-      console.log(this.currentPage)
       this.getProductList(this.currentPage, this.searchForm.productCode, this.searchForm.name, this.searchForm.categoryId)
     },
     //获取产品数据
@@ -149,7 +150,6 @@ export default {
         name,
         categoryld
       }).then(res => {
-        console.log(res.list)
         this.productList = res.list
         this.totalProduct = res.total
       })
@@ -161,7 +161,6 @@ export default {
     },
     //编辑用户信息
     upadateProduct(row) {
-      console.log(row)
       this.isUpdate = true
       this.productForm.productCode = row.productCode
       this.productForm.name = row.name
@@ -179,12 +178,10 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          console.log('sadd')
           apiDelProduct({
             productCode: row.productCode,
             page: this.currentPage
           }).then(res => {
-            console.log(res)
             if (res.code === 2) {
               this.$message({
                 type: 'success',
@@ -226,7 +223,6 @@ export default {
             remark: this.productForm.remark
           })
             .then(res => {
-              console.log(res)
               if (res.code === 2) {
                 this.$message({
                   type: 'success',
@@ -256,7 +252,6 @@ export default {
     //获取所有产品分类列表
     getAllCategory() {
       apiGetAllSaleCategory({}).then(res => {
-        console.log(res)
         this.allSaleCategory = res
       })
     }
@@ -271,7 +266,8 @@ export default {
 .product_mgr {
   padding-left: 20px;
   .add_product {
-    margin-bottom: 25px;
+    margin-bottom: 10px;
+    margin-top: -10px;
   }
   .all_product {
     width: 1351px;

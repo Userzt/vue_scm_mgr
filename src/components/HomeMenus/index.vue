@@ -2,18 +2,10 @@
   <div class="home_list">
     <el-row class="list">
       <el-col :span="24">
-        <el-menu
-          class="el-menu-vertical-demo"
-          @open="this.handleOpen"
-          @close="this.handleClose"
-          background-color="#545c64"
-          text-color="#fff"
-          active-text-color="#ffd04b"
-          router
-        >
+        <el-menu class="el-menu-vertical-demo" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
           <el-submenu index="1">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i class="el-icon-user"></i>
               <span>管理信息</span>
             </template>
             <el-menu-item index="home">首页</el-menu-item>
@@ -22,7 +14,7 @@
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i class="el-icon-s-order"></i>
               <span>产品管理</span>
             </template>
             <el-menu-item index="saleCategory">产品分类管理</el-menu-item>
@@ -30,7 +22,7 @@
           </el-submenu>
           <el-submenu index="3">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i class="el-icon-shopping-cart-2"></i>
               <span>采购管理</span>
             </template>
             <el-menu-item index="supplier">供应商管理</el-menu-item>
@@ -40,7 +32,7 @@
           </el-submenu>
           <el-submenu index="4">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i class="el-icon-house"></i>
               <span>仓库管理</span>
             </template>
             <el-menu-item index="warehouseRegister">入库登记</el-menu-item>
@@ -50,7 +42,7 @@
           </el-submenu>
           <el-submenu index="5">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i class="el-icon-sell"></i>
               <span>销售管理</span>
             </template>
             <el-menu-item index="customer">客户管理</el-menu-item>
@@ -60,7 +52,7 @@
           </el-submenu>
           <el-submenu index="6">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i class="el-icon-s-finance"></i>
               <span>财务收支</span>
             </template>
             <el-menu-item index="incomeCheck">收款登记</el-menu-item>
@@ -69,7 +61,7 @@
           </el-submenu>
           <el-submenu index="7">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i class="el-icon-folder-checked"></i>
               <span>月度报表</span>
             </template>
             <el-menu-item index="poreport">月度采购报表</el-menu-item>
@@ -89,12 +81,6 @@
 import { apiLogout } from '@/request/api'
 export default {
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath)
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath)
-    },
     //退出登录
     exit() {
       apiLogout({})
@@ -108,12 +94,10 @@ export default {
             this.$store.commit('del_token')
             this.$router.push('login')
           }
-          console.log(res)
         })
         .catch(err => {
           console.log(err)
         })
-      console.log('sadasd')
     }
   },
   computed: {

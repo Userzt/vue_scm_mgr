@@ -7,7 +7,7 @@
       <el-table-column type="index" label="序号" width="80"> </el-table-column>
       <el-table-column prop="soId" label="销售单编号" width="120"> </el-table-column>
       <el-table-column prop="createTime" label="创建时间" width="160"></el-table-column>
-      <el-table-column prop="name" label="客户名字" width="150"> </el-table-column>
+      <el-table-column prop="customerName" label="客户名字" width="150"> </el-table-column>
       <el-table-column prop="account" label="创建用户" width="100"></el-table-column>
       <el-table-column prop="tipFee" label="附加费用" width="100"></el-table-column>
       <el-table-column prop="productTotal" label="采购产品总价" width="120"></el-table-column>

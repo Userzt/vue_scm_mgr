@@ -177,7 +177,6 @@ export default {
             baseURL: 'http://127.0.0.1:9000'
           })
             .then(res => {
-              console.log(res);
               if (res.data.code === 2) {
                 this.$message({
                   type: 'success',

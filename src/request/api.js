@@ -156,3 +156,6 @@ export const apiGetReceiptDetail = p => get('/main/report/payment/detail/receipt
 
 //获取付款明细
 export const apiGetPayDetail = p => get('/main/report/payment/detail/pay', p)
+
+//查看指定产品的库存变更记录
+export const apiGetStockAlterRecord = p => get('/main/stock/alterRecord', p)

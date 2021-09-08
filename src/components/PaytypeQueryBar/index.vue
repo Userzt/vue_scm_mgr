@@ -25,15 +25,12 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.el-button {
-  margin-left: 0 !important;
-  border-radius: 0 !important;
-  border-right: 1px solid #fff !important;
-}
 .paytype_select {
   margin-bottom: 20px;
-}
-.details_btn {
-  margin-right: 10px;
+  .el-button {
+    margin-left: 0 !important;
+    border-radius: 0 !important;
+    border-right: 1px solid #fff !important;
+  }
 }
 </style>

@@ -28,7 +28,23 @@
     </el-form>
 
     <!-- 渲染搜索得到的数据 -->
-    <el-table :data="queryList" border style="width: 1301px">
+    <!-- 收入数据 -->
+    <el-table :data="queryList" border style="width: 801px" v-show="isIncome">
+      <el-table-column type="index" label="编号" width="100"> </el-table-column>
+      <el-table-column prop="payTime" label="收款时间" width="200"></el-table-column>
+      <el-table-column prop="ordercode" label="相关单据号" width="150"> </el-table-column>
+      <el-table-column prop="account" label="经手人" width="100"></el-table-column>
+      <el-table-column prop="payPrice" label="收款金额" width="100"></el-table-column>
+      <el-table-column prop="payType" label="单据付款方式" width="150">
+        <template slot-scope="scope">
+          <span v-if="scope.row.payType == 1">货到付款</span>
+          <span v-else-if="scope.row.payType == 2">款到发货</span>
+          <span v-else-if="scope.row.payType == 3">预付款到发货</span>
+        </template>
+      </el-table-column>
+    </el-table>
+    <!-- 支出数据 -->
+    <el-table :data="queryList" border style="width: 801px" v-show="!isIncome">
       <el-table-column type="index" label="编号" width="100"> </el-table-column>
       <el-table-column prop="payTime" label="付款时间" width="200"></el-table-column>
       <el-table-column prop="ordercode" label="相关单据号" width="150"> </el-table-column>
@@ -42,6 +58,10 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 分页栏 -->
+    <div class="pagination">
+      <el-pagination @current-change="handleCurrentPageChange" background layout="prev, pager, next" :total="totalList"> </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -62,12 +82,18 @@ export default {
       //查询到的数据
       queryList: [],
       currentPage: 1,
-      totalQuerylist: 0
+      totalList: 0,
+      isIncome: true
     }
   },
   methods: {
     //查询
     query() {
+      if (this.queryForm.type === '收入') {
+        this.isIncome = true
+      } else {
+        this.isIncome = false
+      }
       this.getQueryList()
     },
     //获取查询到的数据
@@ -80,9 +106,8 @@ export default {
         endDate: this.queryForm.endDate,
         page: this.currentPage
       }).then(res => {
-        console.log(res)
         this.queryList = res.list
-        this.totalQuerylist = res.total
+        this.totalList = res.total
       })
     },
     //页数改变

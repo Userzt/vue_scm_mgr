@@ -43,7 +43,6 @@ export default {
             role: 'member'
           })
             .then(res => {
-              console.log(res)
               if (res.code === 2) {
                 //将token保存至vuex中
                 this.$store.commit('set_token', res.data.token)

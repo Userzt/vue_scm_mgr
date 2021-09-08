@@ -98,7 +98,6 @@ export default {
         type,
         page
       }).then(res => {
-        console.log(res)
         this.saleList = res.list
         this.totalSalelist = res.total
       })

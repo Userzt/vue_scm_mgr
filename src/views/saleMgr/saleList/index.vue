@@ -264,7 +264,6 @@ export default {
       apiGetSomainQueryItem({
         soId
       }).then(res => {
-        console.log(res)
         this.salelistForm.soitems = res
       })
     },

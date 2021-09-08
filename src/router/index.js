@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/login/index.vue'
 import IndexWelcome from '@/views/msgManager/indexWelcome'
-import Router from 'vue-router'
 
 Vue.use(VueRouter)
 
@@ -225,25 +224,20 @@ const router = new VueRouter({
   routes
 })
 
-//配置路由守卫
-// router.beforeEach((to, from, next) => {
-//   if (to.path === '/login') {
-//     next()
-//     return
-//   }
-//   // 获取token
-//   const tokenStr = window.sessionStorage.getItem('token')
-//   if (!tokenStr) {
-//     next('/login')
-//     return
-//   }
-//   next()
-// })
+// 配置路由守卫
+router.beforeEach((to, from, next) => {
+  if (to.path === '/login') {
+    next()
+    return
+  }
+  // 获取token
+  const tokenStr = window.sessionStorage.getItem('token')
+  if (!tokenStr) {
+    next('/login')
+    return
+  }
+  next()
+})
 
-// const originalPush = Router.prototype.push
-// Router.prototype.push = function push(location, onResolve, onReject) {
-//   if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
-//   return originalPush.call(this, location).catch(err => err)
-// }
 
 export default router

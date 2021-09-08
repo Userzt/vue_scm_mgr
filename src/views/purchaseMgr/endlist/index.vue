@@ -134,7 +134,6 @@ export default {
         status,
         page
       }).then(res => {
-        console.log(res)
         this.buyList = res.list
         this.totalBuylist = res.total
       })

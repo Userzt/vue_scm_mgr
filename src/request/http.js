@@ -20,7 +20,7 @@ axios.interceptors.request.use(
     // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
     // if (store.state.token) {
     //   console.log(store.state.token)
-    config.headers.token = localStorage.getItem('token') // 让每个请求携带自定义token 请根据实际情况自行修改
+    config.headers.token = sessionStorage.getItem('token') // 让每个请求携带自定义token 请根据实际情况自行修改
     // }
     return config
   },
@@ -39,7 +39,7 @@ axios.interceptors.request.use(
 //         })
 //         router.push('/login')
 //         // 清除浏览器缓存
-//         localStorage.removeItem('token')
+//         sessionStorage.removeItem('token')
 //     } else {
 //         // 响应正常，返回数据即可
 //         return data

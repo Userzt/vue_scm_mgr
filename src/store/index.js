@@ -5,19 +5,22 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    token: ''
+    token: '',
+    
   },
   mutations: {
-    //localStorage存储token
+    //sessionStorage存储token
     set_token(state, token) {
       state.token = token
-      localStorage.setItem('token', token)
+      sessionStorage.setItem('token', token)
     },
-    //localStorage删除token
+    //sessionStorage删除token
     del_token(state) {
       state.token = ''
-      localStorage.removeItem('token')
+      sessionStorage.removeItem('token')
     }
+
+    //
   },
   actions: {},
   modules: {}

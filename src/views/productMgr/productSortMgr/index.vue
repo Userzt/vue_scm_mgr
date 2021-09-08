@@ -109,7 +109,6 @@ export default {
             categoryId: row.categoryId,
             page: this.currentPage
           }).then(res => {
-            console.log(res)
             if (res.code === 2) {
               this.$message({
                 type: 'success',

@@ -181,7 +181,6 @@ export default {
           apiDelSupplier({
             venderCode: row.venderCode,
           }).then(res => {
-            console.log(res)
             if (res.code === 2) {
               this.$message({
                 type: 'success',
@@ -225,7 +224,6 @@ export default {
             fax: this.supplierForm.fax
           })
             .then(res => {
-              console.log(res)
               if (res.code === 2) {
                 this.$message({
                   type: 'success',

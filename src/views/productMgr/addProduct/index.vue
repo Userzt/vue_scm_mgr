@@ -90,7 +90,6 @@ export default {
             remark: this.productForm.remark
           })
             .then(res => {
-              console.log(res)
               if (res.code === 2) {
                 this.$message({
                   type: 'success',
