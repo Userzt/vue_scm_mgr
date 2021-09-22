@@ -25,24 +25,24 @@ export default {
     return {
       user: {
         username: '',
-        password: ''
+        password: '',
       },
       userRules: {
         username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
-      }
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+      },
     }
   },
   methods: {
     loginIn() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate((valid) => {
         if (valid) {
           apiLogin({
             username: this.user.username,
             password: this.user.password,
-            role: 'member'
+            role: 'member',
           })
-            .then(res => {
+            .then((res) => {
               if (res.code === 2) {
                 //将token保存至vuex中
                 this.$store.commit('set_token', res.data.token)
@@ -50,7 +50,7 @@ export default {
                 sessionStorage.setItem('account', res.data.user.account)
                 this.$message({
                   type: 'success',
-                  message: '登录成功'
+                  message: '登录成功',
                 })
                 //保存登录时间
                 sessionStorage.setItem('loginTime', new Date())
@@ -58,22 +58,22 @@ export default {
               } else if (res.code === 3) {
                 this.$message({
                   type: 'error',
-                  message: '账号或者密码错误'
+                  message: '账号或者密码错误',
                 })
               } else if (res.code === 4) {
                 this.$message({
                   type: 'warning',
-                  message: res.message
+                  message: res.message,
                 })
               }
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error)
             })
         }
       })
-    }
-  }
+    },
+  },
 }
 </script>
 

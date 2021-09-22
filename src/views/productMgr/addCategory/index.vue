@@ -12,7 +12,7 @@
           <el-input v-model="ruleForm.remark"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">确认保存</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')">确认添加</el-button>
           <el-button @click="reback">取消</el-button>
         </el-form-item>
       </el-form>

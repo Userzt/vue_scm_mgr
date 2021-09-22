@@ -2,7 +2,7 @@
   <div class="pay_wrapper">
     <PaytypeQueryBar @cashOnDelivery="cashOnDelivery" @paymentToDelivery="paymentToDelivery" @advancePaymentToDelivery="advancePaymentToDelivery" />
     <!-- 采购单展示区 -->
-    <div class="all_buylist" style="width:1501px">
+    <div class="all_buylist" style="width: 1501px">
       <el-table :data="buyList" border style="width: 100%">
         <el-table-column type="index" label="序号" width="100"> </el-table-column>
         <el-table-column prop="poId" label="采购单编号" width="150"> </el-table-column>
@@ -62,7 +62,7 @@ import { apiPomainShow, apiGetPomainQueryItem, apiPay } from '@/request/api'
 
 export default {
   components: {
-    PaytypeQueryBar
+    PaytypeQueryBar,
   },
   data() {
     return {
@@ -70,7 +70,7 @@ export default {
       totalBuylist: 1,
       currentPage: 1,
       poitems: [],
-      dialogDetailsVisible: false
+      dialogDetailsVisible: false,
     }
   },
   methods: {
@@ -96,8 +96,8 @@ export default {
       apiPomainShow({
         payType,
         type,
-        page
-      }).then(res => {
+        page,
+      }).then((res) => {
         console.log(res)
         this.buyList = res.list
         this.totalBuylist = res.total
@@ -106,8 +106,8 @@ export default {
     //获取指定采购单的明细
     getSomainQueryItem(poId) {
       apiGetPomainQueryItem({
-        poId
-      }).then(res => {
+        poId,
+      }).then((res) => {
         this.poitems = res
       })
     },
@@ -121,39 +121,60 @@ export default {
       this.$confirm('此操作将付款该采购单, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
       })
         .then(() => {
-          apiPay({
-            poId: row.poId,
-            type: row.payType === 3 ? 2 : 1,
-            page: this.currentPage
-          }).then(res => {
-            if (res.code === 2) {
-              this.$message({
-                type: 'success',
-                message: res.message
-              })
-              this.getPomainList(row.payType, 3, this.currentPage)
-            } else {
-              this.$message({
-                type: 'error',
-                message: res.message
-              })
-            }
-          })
+          if (row.status === 1) {
+            apiPay({
+              poId: row.poId,
+              type: row.payType === 3 ? 2 : 1,
+              page: this.currentPage,
+            }).then((res) => {
+              if (res.code === 2) {
+                this.$message({
+                  type: 'success',
+                  message: res.message,
+                })
+                this.getPomainList(row.payType, 3, this.currentPage)
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: res.message,
+                })
+              }
+            })
+          } else if (row.status === 2) {
+            apiPay({
+              poId: row.poId,
+              type: 1,
+              page: this.currentPage,
+            }).then((res) => {
+              if (res.code === 2) {
+                this.$message({
+                  type: 'success',
+                  message: res.message,
+                })
+                this.getPomainList(row.payType, 3, this.currentPage)
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: res.message,
+                })
+              }
+            })
+          }
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消付款'
+            message: '已取消付款',
           })
         })
-    }
+    },
   },
   mounted() {
     this.getPomainList(1, 3, 1)
-  }
+  },
 }
 </script>
 <style lang="less" scoped>

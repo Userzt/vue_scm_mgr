@@ -3,7 +3,7 @@
     <PaytypeQueryBar @cashOnDelivery="cashOnDelivery" @paymentToDelivery="paymentToDelivery" @advancePaymentToDelivery="advancePaymentToDelivery" />
 
     <!-- 采购单展示区 -->
-    <div class="all_buylist" style="width:1501px">
+    <div class="all_buylist" style="width: 1501px">
       <el-table :data="buyList" border style="width: 100%">
         <el-table-column type="index" label="序号" width="100"> </el-table-column>
         <el-table-column prop="poId" label="采购单编号" width="150"> </el-table-column>
@@ -64,7 +64,7 @@ import PaytypeQueryBar from '@/components/PaytypeQueryBar'
 
 export default {
   components: {
-    PaytypeQueryBar
+    PaytypeQueryBar,
   },
   data() {
     return {
@@ -72,7 +72,7 @@ export default {
       totalBuylist: 1,
       currentPage: 1,
       poitems: [],
-      dialogDetailsVisible: false
+      dialogDetailsVisible: false,
     }
   },
   methods: {
@@ -98,32 +98,32 @@ export default {
       this.$confirm('此操作将了结该采购单, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
       })
         .then(() => {
-          apiPomainEnd({
-            poId: row.poId,
-            payType: row.payType,
-            page: this.currentPage
-          }).then(res => {
-            if (res.code === 2) {
-              this.$message({
-                type: 'success',
-                message: res.message
-              })
-              this.buyList = res.data.list
-            } else {
-              this.$message({
-                type: 'error',
-                message: res.message
-              })
-            }
-          })
+            apiPomainEnd({
+              poId: row.poId,
+              payType: row.payType,
+              page: this.currentPage,
+            }).then((res) => {
+              if (res.code === 2) {
+                this.$message({
+                  type: 'success',
+                  message: res.message,
+                })
+                this.buyList = res.data.list
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: res.message,
+                })
+              }
+            })
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消了结'
+            message: '已取消了结',
           })
         })
     },
@@ -132,8 +132,8 @@ export default {
       apiBuylistQuery({
         payType,
         status,
-        page
-      }).then(res => {
+        page,
+      }).then((res) => {
         this.buyList = res.list
         this.totalBuylist = res.total
       })
@@ -141,8 +141,8 @@ export default {
     //获取指定采购单的明细
     getPomainQueryItem(poId) {
       apiGetPomainQueryItem({
-        poId
-      }).then(res => {
+        poId,
+      }).then((res) => {
         this.poitems = res
       })
     },
@@ -150,11 +150,11 @@ export default {
     handleCurrentPageChange(page) {
       this.currentPage = page
       this.getSupplierList(this.currentPage)
-    }
+    },
   },
   mounted() {
     this.getSupplierList(1, 3, this.currentPage)
-  }
+  },
 }
 </script>
 <style lang="less" scoped>

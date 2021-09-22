@@ -2,7 +2,7 @@
   <div class="income_wrapper">
     <PaytypeQueryBar @cashOnDelivery="cashOnDelivery" @paymentToDelivery="paymentToDelivery" @advancePaymentToDelivery="advancePaymentToDelivery" />
     <!-- 销售单展示区 -->
-    <div class="all_salelist" style="width:1501px">
+    <div class="all_salelist" style="width: 1501px">
       <el-table :data="saleList" border style="width: 100%">
         <el-table-column type="index" label="序号" width="100"> </el-table-column>
         <el-table-column prop="soId" label="销售单编号" width="150"> </el-table-column>
@@ -62,7 +62,7 @@ import { apiGetSomainShow, apiGetSomainQueryItem, apiReceipt } from '@/request/a
 
 export default {
   components: {
-    PaytypeQueryBar
+    PaytypeQueryBar,
   },
   data() {
     return {
@@ -70,7 +70,7 @@ export default {
       totalSalelist: 1,
       currentPage: 1,
       soitems: [],
-      dialogDetailsVisible: false
+      dialogDetailsVisible: false,
     }
   },
   methods: {
@@ -96,8 +96,8 @@ export default {
       apiGetSomainShow({
         payType,
         type,
-        page
-      }).then(res => {
+        page,
+      }).then((res) => {
         this.saleList = res.list
         this.totalSalelist = res.total
       })
@@ -105,8 +105,8 @@ export default {
     //获取指定销售单的明细
     getSomainQueryItem(soId) {
       apiGetSomainQueryItem({
-        soId
-      }).then(res => {
+        soId,
+      }).then((res) => {
         this.soitems = res
       })
     },
@@ -120,39 +120,60 @@ export default {
       this.$confirm('此操作将收款该销售单, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
       })
         .then(() => {
-          apiReceipt({
-            soId: row.soId,
-            type: row.payType === 2 ? 1 : 2,
-            page: this.currentPage
-          }).then(res => {
-            if (res.code === 2) {
-              this.$message({
-                type: 'success',
-                message: res.message
-              })
-              this.getSomainList(row.payType, 3, this.currentPage)
-            } else {
-              this.$message({
-                type: 'error',
-                message: res.message
-              })
-            }
-          })
+          if (row.status === 1) {
+            apiReceipt({
+              soId: row.soId,
+              type: row.payType === 3 ? 2 : 1,
+              page: this.currentPage,
+            }).then((res) => {
+              if (res.code === 2) {
+                this.$message({
+                  type: 'success',
+                  message: res.message,
+                })
+                this.getSomainList(row.payType, 3, this.currentPage)
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: res.message,
+                })
+              }
+            })
+          } else if (row.status === 2) {
+            apiReceipt({
+              soId: row.soId,
+              type: 1,
+              page: this.currentPage,
+            }).then((res) => {
+              if (res.code === 2) {
+                this.$message({
+                  type: 'success',
+                  message: res.message,
+                })
+                this.getSomainList(row.payType, 3, this.currentPage)
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: res.message,
+                })
+              }
+            })
+          }
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消收款'
+            message: '已取消收款',
           })
         })
-    }
+    },
   },
   mounted() {
     this.getSomainList(1, 3, 1)
-  }
+  },
 }
 </script>
 <style lang="less" scoped>
